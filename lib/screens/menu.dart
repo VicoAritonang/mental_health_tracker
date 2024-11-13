@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health_tracker/widgets/left_drawer.dart';
+import 'package:mental_health_tracker/widgets/mood_card.dart';
 
 class MyHomePage extends StatelessWidget {
-  final String npm = '2306219083'; // NPM
-  final String name = 'Vico Winner Sebastian Aritonang'; // Nama
-  final String className = 'PBP B'; // Kelas
+  final String npm = '2306219083';
+  final String name = 'Vico Winner Sebastian Aritonang';
+  final String className = 'PBP B';
 
-  // Perbaikan: tambahkan `super.key` pada constructor
   MyHomePage({super.key});
 
   final List<ItemHomepage> items = [
@@ -21,13 +21,9 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Mental Health Tracker',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
-        // Mengganti warna icon drawer menjadi putih
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       drawer: const LeftDrawer(),
@@ -52,10 +48,7 @@ class MyHomePage extends StatelessWidget {
                     padding: EdgeInsets.only(top: 16.0),
                     child: Text(
                       'Welcome to Mental Health Tracker',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                     ),
                   ),
                   GridView.count(
@@ -65,8 +58,8 @@ class MyHomePage extends StatelessWidget {
                     mainAxisSpacing: 10,
                     crossAxisCount: 3,
                     shrinkWrap: true,
-                    children: items.map((ItemHomepage item) {
-                      return ItemCard(item: item); // Perbaikan: tambahkan `item:` di sini
+                    children: items.map((item) {
+                      return MoodCard(item: item);
                     }).toList(),
                   ),
                 ],
@@ -112,54 +105,4 @@ class ItemHomepage {
   final IconData icon;
 
   ItemHomepage(this.name, this.icon);
-}
-
-class ItemCard extends StatelessWidget {
-  final ItemHomepage item;
-
-  const ItemCard({super.key, required this.item}); // Perbaikan: gunakan nama parameter `{required this.item}`
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).colorScheme.secondary,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        onTap: () {
-          // Memunculkan SnackBar ketika diklik
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(
-                content: Text("Kamu telah menekan tombol ${item.name}!")));
-
-          // Navigate ke route yang sesuai (tergantung jenis tombol)
-          if (item.name == "Tambah Mood") {
-            // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup MoodEntryFormPage.
-            
-          }
-        },
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }
